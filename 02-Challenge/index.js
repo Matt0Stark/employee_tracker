@@ -1,64 +1,90 @@
-/*
 
-const inquirer = require('inquirer')
-
-function start(){
-  // present initial list of menu options
-  inquirer.prompt(listOfOptions).then(
-
-  )
-}
-
-function viewAllEmployees(){
-
-}
-
-function displayTable(array){
-
-}
-
-function getAllDepartments(){
-  const allDepartments = getDepartments();
-  inquirer.prompt([
-   {
-    type: 'list',
-    message: 'Which department?',
-    name: 'department_id',
-    choices: function(){
-        allDepartments.map(department => {
-          return {
-            id: department.id,
-            value: department.department_name
-          }
-        })
-      }
-    }
-  ]).then(response => {
-    // response.department_id
-  })
-}
-
-*/
-
-
-// outside file for organizing
-/*
-
+const inquirer = require('inquirer');
 const mysql = require('mysql2');
-const connection = require('./config')
+require('dotenv').config();
 
-const db = mysql.createConnection(connection)
+const db = require("./config/connection");
 
-function getAllEmployees(){
-  /return\ db.query('...', (err, data) => {
-    return data
-  })
-}
 
-module.exports = {
-  getAllEmployees
-}
-*/
+// per tutor, no need to express for mvp
+
+
+
+
+const optionsMenu = [
+  {
+    type:"list",
+    message:"what would you like to do?",
+    name:"optionChoice",
+    choices: [
+      "view all departments",
+      "view all roles",
+      "view all employees",
+      "add a department",
+      "add a role",
+      "add an employee",
+      "update an employee's role"
+    ]
+  }
+]
+
+
+
+// function start(){
+//   // present initial list of menu options
+//   inquirer.prompt(listOfOptions).then(
+
+//   )
+// }
+
+// function viewAllEmployees(){
+
+// }
+
+// function displayTable(array){
+
+// }
+
+// function getAllDepartments(){
+//   const allDepartments = getDepartments();
+//   inquirer.prompt([
+//    {
+//     type: 'list',
+//     message: 'Which department?',
+//     name: 'department_id',
+//     choices: function(){
+//         allDepartments.map(department => {
+//           return {
+//             id: department.id,
+//             value: department.department_name
+//           }
+//         })
+//       }
+//     }
+//   ]).then(response => {
+//     // response.department_id
+//   })
+// }
+
+
+
+// // outside file for organizing
+
+
+// const mysql = require('mysql2');
+// const connection = require('./config')
+
+// const db = mysql.createConnection(connection)
+
+// function getAllEmployees(){
+//   /return\ db.query('...', (err, data) => {
+//     return data
+//   })
+// }
+
+// module.exports = {
+//   getAllEmployees
+// }
 
 // *** You can join a table to itself, this will be used for one of the queries
 
