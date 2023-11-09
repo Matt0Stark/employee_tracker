@@ -6,7 +6,7 @@ require('dotenv').config();
 const db = require("./config/connection");
 
 
-// per tutor, no need to express for mvp
+// per tutor, no need to express for mvp?
 
 
 
@@ -41,10 +41,37 @@ const optionsMenu = [
 
 
 function init() {
-  inquirer.prompt(optionsMenu).then(data => {
-    console.log(data)
-      // const dataBack = generateMarkdown(data);
-      // writeToFile(dataBack);    
+  inquirer.prompt(optionsMenu)
+  .then(data => {
+    console.log(data.optionChoice)
+    if (data.optionChoice === "quit") return process.exit() 
+    switch (data.optionChoice) {
+      case "view all departments":
+       getAllDepartments();
+        break;
+
+      case 1:
+        day = "Monday";
+        break;
+      case 2:
+         day = "Tuesday";
+        break;
+      case 3:
+        day = "Wednesday";
+        break;
+      case 4:
+        day = "Thursday";
+        break;
+      case 5:
+        day = "Friday";
+        break;
+      case 6:
+        day = "Saturday";
+        case 7:
+        day = "Friday";
+        break;
+    }
+    init();
   })
 };
 
