@@ -13,9 +13,9 @@ const db = require("./config/connection");
 
 const optionsMenu = [
   {
-    type:"list",
-    message:"what would you like to do?",
-    name:"optionChoice",
+    type: "list",
+    message: "what would you like to do?",
+    name: "optionChoice",
     choices: [
 
       "view all departments",
@@ -42,37 +42,43 @@ const optionsMenu = [
 
 function init() {
   inquirer.prompt(optionsMenu)
-  .then(data => {
-    console.log(data.optionChoice)
-    if (data.optionChoice === "quit") return process.exit() 
-    switch (data.optionChoice) {
-      case "view all departments":
-       getAllDepartments();
-        break;
+    .then(data => {
+      console.log(data.optionChoice)
+      if (data.optionChoice === "quit") return process.exit()
+      switch (data.optionChoice) {
 
-      case 1:
-        day = "Monday";
-        break;
-      case 2:
-         day = "Tuesday";
-        break;
-      case 3:
-        day = "Wednesday";
-        break;
-      case 4:
-        day = "Thursday";
-        break;
-      case 5:
-        day = "Friday";
-        break;
-      case 6:
-        day = "Saturday";
-        case 7:
-        day = "Friday";
-        break;
-    }
-    init();
-  })
+        case "view all departments":
+          //getAllDepartments();
+          break;
+
+        case "view all roles":
+          // day = "Monday";
+          break;
+
+        case  "view all employees":
+          // day = "Tuesday";
+          break;
+
+        case "add a department":
+          // day = "Wednesday";
+          break;
+
+        case  "add a role":
+          // day = "Thursday";
+          break;
+
+        case "add an employee":
+          // day = "Friday";
+          break;
+
+        case "update an employee's role":
+          // day = "Saturday";
+          break;
+
+    
+      }
+      init();
+    })
 };
 
 init();
