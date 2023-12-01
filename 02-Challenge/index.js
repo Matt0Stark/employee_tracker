@@ -3,67 +3,74 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 require('dotenv').config();
 
-const db = require("./config/connection");
+const db = require("./db");
 
 
 // per tutor, no need to express for mvp?
-
-
-
-
-const optionsMenu = [
-  {
-    type: "list",
-    message: "what would you like to do?",
-    name: "optionChoice",
-    choices: [
-
-      "view all departments",
-
-      "view all roles",
-
-      "view all employees",
-
-      "add a department",
-
-      "add a role",
-
-      "add an employee",
-
-      "update an employee's role",
-
-      "quit"
-
-    ]
-  }
-]
-
-
+function quit(){
+  process.exit()
+}
 
 function init() {
-  inquirer.prompt(optionsMenu)
+  inquirer.prompt(
+
+    [
+      {
+        type: "list",
+        message: "what would you like to do?",
+        name: "optionChoice",
+        choices: [
+          { 
+            name: "view all departments",
+            value: "VIEW_DEPARTMENTS"
+          },{
+            name: "view all roles",
+            value:"VIEW_ROLES"
+          },{
+            name: "view all employees",
+            value: "VIEW_EMPLOYEES"
+          },{
+          name: "add a department",
+          value: "xxx"
+          },{
+          name: "add a role",
+          value: "xxx"
+          },{
+          name: "add an employee",
+          value: "xxx"
+          },{
+
+          name: "update an employee's role",
+          value: "xxx"
+          },{
+          name: "quit",
+          value: "yay, one thing works"
+          }
+        ]
+      }
+    ])
     .then(data => {
       console.log(data.optionChoice)
-      if (data.optionChoice === "quit") return process.exit()
+      // if (data.optionChoice === "quit") return process.exit()
       switch (data.optionChoice) {
 
-        case "view all departments":
-          //getAllDepartments();
+        case "VIEW_DEPARTMENTS":
+          viewDepartments();
           break;
 
         case "view all roles":
           // day = "Monday";
           break;
 
-        case  "view all employees":
-          // day = "Tuesday";
+        case "view all employees":
+          viewEmployees();
           break;
 
         case "add a department":
           // day = "Wednesday";
           break;
 
-        case  "add a role":
+        case "add a role":
           // day = "Thursday";
           break;
 
@@ -75,18 +82,32 @@ function init() {
           // day = "Saturday";
           break;
 
-    
+        default:
+          quit()
+
       }
-      init();
     })
 };
 
 init();
 
+// find all departments nor defined. 
+function viewDepartments() {
+  console.log("view")
+  findAllDepartments()
+//restart at the top
+  .then( () => init())
+  
+}
 
-
-
-
+function viewEmployees(){
+  db.findAllEmployees()
+  .then(([rows])=>{
+    let employees = rows;
+    console.table(employees)
+  })
+  .then( () => init())
+}
 
 
 
