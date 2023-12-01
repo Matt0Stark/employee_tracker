@@ -2,12 +2,13 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 require('dotenv').config();
+// const DB = require("./db/index")
 
 const db = require("./db");
 
 
 // per tutor, no need to express for mvp?
-function quit(){
+function quit() {
   process.exit()
 }
 
@@ -20,31 +21,31 @@ function init() {
         message: "what would you like to do?",
         name: "optionChoice",
         choices: [
-          { 
+          {
             name: "view all departments",
             value: "VIEW_DEPARTMENTS"
-          },{
+          }, {
             name: "view all roles",
-            value:"VIEW_ROLES"
-          },{
+            value: "VIEW_ROLES"
+          }, {
             name: "view all employees",
             value: "VIEW_EMPLOYEES"
-          },{
-          name: "add a department",
-          value: "xxx"
-          },{
-          name: "add a role",
-          value: "xxx"
-          },{
-          name: "add an employee",
-          value: "xxx"
-          },{
+          }, {
+            name: "add a department",
+            value: "xxx"
+          }, {
+            name: "add a role",
+            value: "xxx"
+          }, {
+            name: "add an employee",
+            value: "xxx"
+          }, {
 
-          name: "update an employee's role",
-          value: "xxx"
-          },{
-          name: "quit",
-          value: "yay, one thing works"
+            name: "update an employee's role",
+            value: "xxx"
+          }, {
+            name: "quit",
+            value: "yay, one thing works"
           }
         ]
       }
@@ -58,16 +59,16 @@ function init() {
           viewDepartments();
           break;
 
-        case "view all roles":
-          // day = "Monday";
+        case "VIEW_ROLES":
+          viewRoles();
           break;
 
-        case "view all employees":
+        case "VIEW_EMPLOYEES":
           viewEmployees();
           break;
 
         case "add a department":
-          // day = "Wednesday";
+          addNewDepartment;
           break;
 
         case "add a role":
@@ -93,20 +94,42 @@ init();
 
 // find all departments nor defined. 
 function viewDepartments() {
-  console.log("view")
-  findAllDepartments()
-//restart at the top
-  .then( () => init())
-  
+  db.findAllDepartments()
+    .then(([rows]) => {
+      let roles = rows;
+      console.table(roles)
+    })
+    .then(() => init())
 }
 
-function viewEmployees(){
+function viewRoles() {
+  db.findAllRoles()
+    .then(([rows]) => {
+      let roles = rows;
+      console.table(roles)
+    })
+    .then(() => init())
+
+}
+
+function viewEmployees() {
   db.findAllEmployees()
-  .then(([rows])=>{
+    .then(([rows]) => {
+      let employees = rows;
+      console.table(employees)
+    })
+    .then(() => init())
+}
+
+//working line
+
+function addNewDepartment(){
+  db.addDepartment()
+  .then(([rows]) => {
     let employees = rows;
     console.table(employees)
   })
-  .then( () => init())
+  .then(() => init())
 }
 
 
@@ -126,26 +149,6 @@ function viewEmployees(){
 
 // }
 
-// function getAllDepartments(){
-//   const allDepartments = getDepartments();
-//   inquirer.prompt([
-//    {
-//     type: 'list',
-//     message: 'Which department?',
-//     name: 'department_id',
-//     choices: function(){
-//         allDepartments.map(department => {
-//           return {
-//             id: department.id,
-//             value: department.department_name
-//           }
-//         })
-//       }
-//     }
-//   ]).then(response => {
-//     // response.department_id
-//   })
-// }
 
 
 
