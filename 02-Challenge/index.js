@@ -3,10 +3,7 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2');
 require('dotenv').config();
 // const DB = require("./db/index")
-
 const db = require("./db");
-
-
 // per tutor, no need to express for mvp?
 function quit() {
   process.exit()
@@ -32,13 +29,13 @@ function init() {
             value: "VIEW_EMPLOYEES"
           }, {
             name: "add a department",
-            value: "xxx"
+            value: "ADD_DEPARTMENT"
           }, {
             name: "add a role",
-            value: "xxx"
+            value: "ADD_ROLE"
           }, {
             name: "add an employee",
-            value: "xxx"
+            value: "ADD_EMPLOYEE"
           }, {
 
             name: "update an employee's role",
@@ -67,16 +64,16 @@ function init() {
           viewEmployees();
           break;
 
-        case "add a department":
-          addNewDepartment;
+        case "ADD_DEPARTMENT":
+          addNewDepartment();
           break;
 
-        case "add a role":
-          // day = "Thursday";
+        case "ADD_ROLE":
+          addNewRole();
           break;
 
-        case "add an employee":
-          // day = "Friday";
+        case "ADD_EMPLOYEE":
+          addNewEmployee()
           break;
 
         case "update an employee's role":
@@ -121,58 +118,56 @@ function viewEmployees() {
     .then(() => init())
 }
 
+function addNewDepartment() {
+  inquirer.prompt({
+    type: 'input',
+    message: 'What would you like to name the new department?',
+    name: 'departmentname',
+  })
+    .then((answer) => {
+      db.createDepartment(answer)
+    })
+    .then(() => init())
+}
+
 //working line
 
-function addNewDepartment(){
-  db.addDepartment()
-  .then(([rows]) => {
-    let employees = rows;
-    console.table(employees)
-  })
-  .then(() => init())
+function addNewRole() {
+
+
+  inquirer.prompt([
+    {
+      type: 'input',
+      message: 'What would you like to name the new role?',
+      name: 'rolename',
+    }, {
+      type: 'input',
+      message: 'What is the salary for the new role?',
+      name: 'rolesalary',
+    }, {
+      type: 'input',
+      message: 'What department does this new role belong to?',
+      name: 'roledepartment',
+    }
+  ])
+    .then(({answer}) => {
+      db.createRole({answer})
+    })
+    .then(() => init())
 }
 
 
-
-// function start(){
-//   // present initial list of menu options
-//   inquirer.prompt(listOfOptions).then(
-
-//   )
-// }
-
-// function viewAllEmployees(){
-
-// }
-
-// function displayTable(array){
-
-// }
-
-
-
-
-// // outside file for organizing
-
-
-// const mysql = require('mysql2');
-// const connection = require('./config')
-
-// const db = mysql.createConnection(connection)
-
-// function getAllEmployees(){
-//   /return\ db.query('...', (err, data) => {
-//     return data
-//   })
-// }
-
-// module.exports = {
-//   getAllEmployees
-// }
-
-// *** You can join a table to itself, this will be used for one of the queries
-
-// make folder 'config' -> make connection.js -> require in mysql2 -> fill in the info (process.env not entirely necessary) -> module.exports = db -> just const db = require('./config/connection.js) -> db.query(allTheThings)
+function addNewEmployee() {
+  inquirer.prompt({
+    type: 'input',
+    message: 'What would you like to name the new employee?',
+    name: 'name',
+  })
+    .then((answer) => {
+      db.createEmployee(answer)
+    })
+    .then(() => init())
+}
 
 
 

@@ -24,18 +24,21 @@ class DB {
         );
     }
 
-    // working line
+   
 
-    addDepartment(department){
+    createDepartment(department){
         return this.connection.promise().query(
             "INSERT INTO department SET ?", department
         );
     }
 
+    // working line
 
-
-
-    
+    createRole(role){
+        return this.connection.promise().query(
+            "INSERT INTO role SET ?", role
+        );
+    }
     
 
     createEmployee(employee){
@@ -46,5 +49,7 @@ class DB {
 }
 
 // tutor assist for notes
+// DELETE FROM favorite_books WHERE id = ?
+
 
 module.exports = new DB(connection);
