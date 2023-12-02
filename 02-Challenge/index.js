@@ -139,19 +139,19 @@ function addNewRole() {
     {
       type: 'input',
       message: 'What would you like to name the new role?',
-      name: 'rolename',
+      name: 'title',
     }, {
       type: 'input',
       message: 'What is the salary for the new role?',
-      name: 'rolesalary',
+      name: 'salary',
     }, {
       type: 'input',
       message: 'What department does this new role belong to?',
-      name: 'roledepartment',
+      name: 'department_id',
     }
   ])
-    .then(({answer}) => {
-      db.createRole({answer})
+    .then((answer) => {
+      db.createRole(answer)
     })
     .then(() => init())
 }

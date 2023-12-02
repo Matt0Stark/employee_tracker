@@ -35,9 +35,23 @@ class DB {
     // working line
 
     createRole(role){
+        console.log(role)
+        console.log(role.title)
+        console.log(role.salary)
+        console.log(role.department_id)
+        const sql = "INSERT INTO role (title, salary, department_id ) SET ?";
+
+
         return this.connection.promise().query(
-            "INSERT INTO role SET ?", role
+            sql, role,
+            
+            (err, result) => {
+                if (err) {
+                console.log(err)
+                }
+              }
         );
+
     }
     
 
