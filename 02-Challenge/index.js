@@ -2,9 +2,8 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 require('dotenv').config();
-// const DB = require("./db/index")
 const db = require("./db");
-// per tutor, no need to express for mvp?
+
 function quit() {
   process.exit()
 }
@@ -59,8 +58,7 @@ function init() {
       }
     ])
     .then(data => {
-      console.log(data.optionChoice)
-      // if (data.optionChoice === "quit") return process.exit()
+
       switch (data.optionChoice) {
 
         case "VIEW_DEPARTMENTS":
@@ -231,7 +229,6 @@ function updateEmployeeRole() {
     .then(() => init())
 }
 
-// still not updating
 function updateManager() {
   inquirer.prompt([
     {

@@ -24,6 +24,7 @@ class DB {
         );
     }
 
+
     createDepartment(department) {
         console.log(department.department)
         return this.connection.promise().query(
@@ -55,7 +56,6 @@ class DB {
         );
     }
 
-        // still not updating
     changeManager(employee) {
         console.log(employee)
 
