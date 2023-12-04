@@ -40,15 +40,18 @@ function init() {
             name: "update an employee's role",
             value: "UPDATE_EMPLOYEE"
           }, {
-            name: "kill an employee",
+            name: "update an employee's manager",
+            value: "UPDATE_MANAGER"
+          }, {
+            name: "remove an employee",
             value: "DELETE_EMPLOYEE"
           }, {
             name: "remove a role",
             value: "DELETE_ROLE"
           }, {
-            name: "kill whole department",
+            name: "remove whole department",
             value: "DELETE_DEPARTMENT"
-          },{
+          }, {
             name: "quit",
             value: "yay, one thing works"
           }
@@ -81,27 +84,31 @@ function init() {
           break;
 
         case "ADD_EMPLOYEE":
-          addNewEmployee()
+          addNewEmployee();
           break;
 
         case "UPDATE_EMPLOYEE":
-          updateEmployee()
+          updateEmployeeRole();
+          break;
+
+        case "UPDATE_MANAGER":
+          updateManager();
           break;
 
         case "DELETE_EMPLOYEE":
-          deleteEmployee()
+          deleteEmployee();
           break;
 
         case "DELETE_ROLE":
-          deleteRole()
+          deleteRole();
           break;
 
         case "DELETE_DEPARTMENT":
-          deleteDepartment()
+          deleteDepartment();
           break;
 
         default:
-          quit()
+          quit();
 
       }
     })
@@ -109,7 +116,6 @@ function init() {
 
 init();
 
-// find all departments nor defined. 
 function viewDepartments() {
   db.findAllDepartments()
     .then(([rows]) => {
@@ -152,8 +158,6 @@ function addNewDepartment() {
     })
     .then(() => init())
 }
-
-//working line
 
 function addNewRole() {
   inquirer.prompt([
@@ -208,7 +212,7 @@ function addNewEmployee() {
 }
 
 
-function updateEmployee() {
+function updateEmployeeRole() {
   inquirer.prompt([
     {
       type: 'input',
@@ -217,12 +221,32 @@ function updateEmployee() {
     },
     {
       type: 'input',
-      message: 'enter the employees ID?',
+      message: 'enter the employees ID',
       name: 'id',
     }
   ])
     .then((answer) => {
-      db.changeEmployee(answer)
+      db.changeEmployeeRole(answer)
+    })
+    .then(() => init())
+}
+
+// still not updating
+function updateManager() {
+  inquirer.prompt([
+    {
+      type: 'input',
+      message: 'enter the employees new manager ID',
+      name: 'manager_id',
+    },
+    {
+      type: 'input',
+      message: 'enter the employees ID',
+      name: 'id',
+    }
+  ])
+    .then((answer) => {
+      db.changeManager(answer)
     })
     .then(() => init())
 }
@@ -234,7 +258,7 @@ function deleteEmployee() {
     name: 'id',
   })
     .then((answer) => {
-      db.killEmployee(answer)
+      db.removeEmployee(answer)
     })
     .then(() => init())
 }
@@ -246,7 +270,7 @@ function deleteRole() {
     name: 'role_id',
   })
     .then((answer) => {
-      db.killRole(answer)
+      db.removeRole(answer)
     })
     .then(() => init())
 }
@@ -258,40 +282,13 @@ function deleteDepartment() {
     name: 'department_id',
   })
     .then((answer) => {
-      db.killDepartment(answer)
+      db.removeDepartment(answer)
     })
     .then(() => init())
 }
 
 
-/*
-potential
 
-class Collection{
-  constructer(name, table, columns){
-    this.name = name,
-    this.table = table,
-    this.columns = columns,
-    this.rows = rows
-  }
-
-  getAll(){
-    db.query(`SELECT * FROM ${this.table}`)
-  }
-
-  getOne(id){
-    db.query(`SELECT * FROM ${this.table} WHERE id - ${id}`)
-  }
-
-  addOne(data){
-    db.query(`INSERT INTO ${this.table}`)
-  }
-}
-
-const employees = new Collection('employees', 'employees', ['id', 'name', 'salary', 'role', 'department', 'manager'])
-
-employees, managers, role, departments
-*/
 
 
 

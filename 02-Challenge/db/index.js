@@ -24,8 +24,6 @@ class DB {
         );
     }
 
-
-
     createDepartment(department) {
         console.log(department.department)
         return this.connection.promise().query(
@@ -36,7 +34,6 @@ class DB {
 
 
     createRole(role) {
-
         return this.connection.promise().query(
             `INSERT INTO role (title, salary, department_id) VALUES ("${role.title}", "${role.salary}", "${role.department_id}" )`
         );
@@ -50,7 +47,7 @@ class DB {
         );
     }
 
-    changeEmployee(employee) {
+    changeEmployeeRole(employee) {
 
         return this.connection.promise().query(
             `UPDATE employee SET role_id=${employee.role_id} 
@@ -58,22 +55,30 @@ class DB {
         );
     }
 
-    killEmployee(employee) {
+        // still not updating
+    changeManager(employee) {
+        console.log(employee)
+
+        return this.connection.promise().query(
+            `UPDATE employee SET manager_id=${employee.manager_id} 
+            WHERE employee.id =${employee.id}`
+        );
+    }
+
+   removeEmployee(employee) {
         console.log(employee)
         return this.connection.promise().query(
             `DELETE FROM employee WHERE employee.id=${employee.id}`
         );
     }
 
-    killRole(role) {
-
+   removeRole(role) {
         return this.connection.promise().query(
             `DELETE FROM role WHERE role.id=${role.role_id}`
         );
     }
 
-    killDepartment(department) {
-
+   removeDepartment(department) {
         return this.connection.promise().query(
             `DELETE FROM department WHERE department.id=${department.department_id}`
         );
@@ -82,17 +87,7 @@ class DB {
 
 
 
-
-
-
-
-
-
-
 }
-
 // tutor assist for notes
-// DELETE FROM favorite_books WHERE id = ?
-
 
 module.exports = new DB(connection);
